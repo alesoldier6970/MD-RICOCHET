@@ -1,23 +1,17 @@
+const path = require('path');
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: 'logo/md-ricochet.ico',
+    icon: path.join(__dirname, 'logo/md-ricochet.ico'), // Corrected icon path
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {
-        icon: 'logo/md-ricochet.ico',
-        setupIcon: 'logo/md-ricochet.ico',
-        shortcutName: 'MD-RICOCHET', 
-        noMsi: true,
-        setupExe: 'MD-RICOCHET.exe',
-        alwaysCreateShortcut: true,
-      },
+      config: {},
     },
     {
       name: '@electron-forge/maker-zip',
@@ -37,8 +31,6 @@ module.exports = {
       name: '@electron-forge/plugin-auto-unpack-natives',
       config: {},
     },
-    // Fuses are used to enable/disable various Electron functionality
-    // at package time, before code signing the application
     new FusesPlugin({
       version: FuseVersion.V1,
       [FuseV1Options.RunAsNode]: false,
